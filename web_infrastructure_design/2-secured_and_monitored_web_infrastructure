@@ -1,0 +1,25 @@
+User (browser)
+     ↓
+Firewall (User → LB)
+     ↓
+Load Balancer (HAProxy) with SSL Certificate (HTTPS)
+     ↓
+Firewalls on each server
+ ├─> Server 1
+ │    ├─ Web Server (Nginx)
+ │    ├─ Application Server
+ │    ├─ Application Code (codebase)
+ │    └─ Database (MySQL Primary)
+ │    └─ Monitoring Client
+ ├─> Server 2
+ │    ├─ Web Server (Nginx)
+ │    ├─ Application Server
+ │    ├─ Application Code (codebase)
+ │    └─ Database (MySQL Replica)
+ │    └─ Monitoring Client
+ └─> Server 3
+      ├─ Web Server (Nginx)
+      ├─ Application Server
+      ├─ Application Code (codebase)
+      └─ Database (MySQL Replica)
+      └─ Monitoring Client

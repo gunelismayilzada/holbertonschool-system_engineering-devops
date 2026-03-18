@@ -1,0 +1,35 @@
+# 0-simple_web_stack
+
+## Simple Web Stack Overview
+
+This infrastructure consists of a single server hosting a website reachable via `www.foobar.com`.
+
+### Components
+
+- **Domain Name:** foobar.com  
+  - Configured with a **www A record** pointing to `8.8.8.8`.
+- **Server (8.8.8.8):** Provides services to clients (web, application, database)
+  - **Web Server (Nginx):** Handles HTTP requests and serves static content
+  - **Application Server:** Executes business logic and dynamic requests
+  - **Application Code (codebase):** Source code of the website
+  - **Database (MySQL):** Stores and manages data
+
+### How a request works
+
+1. User types `www.foobar.com` in their browser
+2. DNS resolves `www.foobar.com` → `8.8.8.8`
+3. Browser sends request using **HTTP over TCP/IP**
+4. Nginx receives the request
+5. Nginx forwards dynamic requests to the Application Server
+6. Application Server may query MySQL database
+7. Response is sent back to the user
+
+### Potential Issues
+
+- **Single Point of Failure (SPOF):** If the server fails, the website goes down
+- **Downtime during maintenance:** Restarting the server or web server interrupts service
+- **Scalability:** One server cannot handle very high traffic
+
+### Diagram
+
+![Simple Web Stack](<PUT_YOUR_DIAGRAM_LINK_HERE>)

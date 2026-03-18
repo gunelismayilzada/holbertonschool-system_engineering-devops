@@ -1,0 +1,44 @@
+# 1-distributed_web_infrastructure
+
+## Distributed Web Stack Overview
+
+This infrastructure hosts `www.foobar.com` using multiple servers with a load balancer for distribution and database replication.
+
+### Components
+
+- **Domain Name:** foobar.com  
+  - Configured with **www A record** pointing to Load Balancer IP
+- **Load Balancer (HAProxy):** Distributes incoming HTTP requests to multiple servers
+  - Algorithm: **Round Robin**
+  - Active-Active setup: Both servers handle requests simultaneously
+- **Server 1:** 
+  - Web Server (Nginx)  
+  - Application Server  
+  - Application Code (codebase)  
+  - Database (MySQL Primary)
+- **Server 2:** 
+  - Web Server (Nginx)  
+  - Application Server  
+  - Application Code (codebase)  
+  - Database (MySQL Replica)
+
+### How a request works
+
+1. User enters `www.foobar.com`
+2. DNS resolves to Load Balancer IP
+3. HAProxy distributes request to Server 1 or Server 2
+4. Nginx receives the request
+5. Application server executes logic and may query database
+6. If reading data, it may query Replica; if writing, Primary database handles it
+7. Response sent back to user
+
+### Database Cluster
+
+- **Primary Node:** Handles write operations  
+- **Replica Node:** Receives replicated data from Primary and handles read operations
+
+### Issues / Considerations
+
+- **SPOF:** Load balancer and Primary database
+- **Security:** No firewall, no HTTPS
+- **Monitoring:** Not configured; cannot detect failures or high load

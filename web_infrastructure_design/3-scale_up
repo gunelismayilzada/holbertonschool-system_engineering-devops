@@ -1,0 +1,38 @@
+# 3-scale_up
+
+## Scale-Up Web Infrastructure
+
+This infrastructure splits components into dedicated servers and adds redundancy in load balancing.
+
+### Components
+
+- **Load Balancer Cluster (HAProxy 1 + HAProxy 2):**  
+  - Distributes requests to web servers  
+  - Cluster setup for Active-Active or Active-Passive high availability
+
+- **Servers:**  
+  - **Web Server:** Handles HTTP requests and static content  
+  - **Application Server:** Runs business logic and processes dynamic requests  
+  - **Database Server:** Stores application data (Primary + Replica for read scaling)
+
+### How a request works
+
+1. User enters `www.foobar.com`
+2. DNS resolves to load balancer cluster IP
+3. Load balancers distribute request to a web server
+4. Web server receives HTTP request
+5. Web server forwards dynamic requests to application server
+6. Application server queries database server if needed
+7. Response is returned to user
+
+### Why components are split
+
+- Each component can **scale independently** (e.g., add more web servers without touching app/database)  
+- Reduces **resource contention**  
+- Simplifies **maintenance and upgrades**
+
+### Notes
+
+- Load balancer cluster ensures **high availability**  
+- Web servers handle static requests; application servers handle dynamic logic  
+- Database server may have replicas for **read scaling**  
